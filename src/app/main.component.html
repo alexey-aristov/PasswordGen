@@ -1,3 +1,28 @@
 <div class="container">
   <h1>Password Gen</h1>
+  <div>
+    <table class="table table-sm table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Time</th>
+          <th scope="col">Login</th>
+          <th scope="col">password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr scope="row" *ngFor="let loginPassword of PrevioslyGenerated">
+          <td style="width: 33%">{{loginPassword.Time.toLocaleString()}}</td>
+          <td style="width: 33%">{{loginPassword.Login}}</td>
+          <td style="width: 33%">{{loginPassword.Password}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <input type="text" [(ngModel)]="Current.Login" />
+    <button (click)="Generate()">Gen</button>
+    <input type="text" readonly [(ngModel)]="Current.Password" />
+    <button>Copy</button>
+    <button (click)="SwitchToNew()">New</button>
+  </div>
 </div>
