@@ -13,14 +13,51 @@ export class MainComponent {
 
   Current: LoginPassword;
 
+  CharsCount: number = 6;
+
+  AvailableRules: RuleWrap[] = [
+    new RuleWrap(new LowerCaseCharsRule(), "Lower case", true),
+    new RuleWrap(new UpperCaseCharsRule(), "Upper case", true),
+    new RuleWrap(new NumberCaseCharsRule(), "Numbers", true),
+    new RuleWrap(new SpecialCaseCharsRule(), "Special characters", true)];
+
   constructor() {
     this.PrevioslyGenerated = [];
     this.Current = new LoginPassword();
-
   }
+
   Generate() {
-    this.Current.Password = Math.floor(Math.random() * 100000) + "_password"
+
+    this.Current.Password = this.GenerateWithRules(
+      this.AvailableRules
+        .filter((ruleview) => ruleview.Checked == true)
+        .map((ruleview) => ruleview.Rule),
+      this.CharsCount);
     this.Current.Time = new Date();
+  }
+
+  GenerateWithRules(rules: CharsRule[], length: number) {
+    let out: string = "";
+    if (length < rules.length) {
+      throw `length of password should be more or equal to rules count.values:length '${length}', rules count:'${rules.length}'.`;
+    }
+
+    if (rules.length <= 0) {
+      throw `rules count should be more then zero.`;
+    }
+
+    while (out.length < length) {
+      for (const rule of rules) {
+        if (out.length < length) {
+          var charPosInRule = Math.floor(Math.random() * rule.Chars.length);
+          var newChar = rule.Chars.substring(charPosInRule, charPosInRule + 1);
+          out += newChar;
+        } else {
+          break;
+        }
+      }
+    }
+    return out;
   }
 
   SwitchToNew() {
@@ -35,8 +72,40 @@ export class MainComponent {
   }
 }
 
+class RuleWrap {
+  Rule: CharsRule;
+  Name: string;
+  Checked: boolean;
+
+  constructor(rule: CharsRule, name: string, checked: boolean) {
+    this.Rule = rule;
+    this.Name = name;
+    this.Checked = checked;
+  }
+}
+
 class LoginPassword {
   Login: string;
   Password: string;
   Time: Date
+}
+
+interface CharsRule {
+  Chars: string;
+}
+
+class LowerCaseCharsRule implements CharsRule {
+  Chars: string = "abcdefghijklmnopqrstuvwxyz"
+}
+
+class UpperCaseCharsRule implements CharsRule {
+  Chars: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+}
+
+class NumberCaseCharsRule implements CharsRule {
+  Chars: string = "0123456789"
+}
+
+class SpecialCaseCharsRule implements CharsRule {
+  Chars: string = "!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"
 }

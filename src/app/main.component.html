@@ -25,4 +25,11 @@
     <button>Copy</button>
     <button (click)="SwitchToNew()">New</button>
   </div>
+  <div>
+    <input type="number" [(ngModel)]="CharsCount">
+    <label *ngFor="let ruleWrap of AvailableRules; let index = index;">
+      <input type="checkbox" value="{{ruleWrap.Rule}}" [(ngModel)]="AvailableRules[index].Checked">{{ruleWrap.Name}}
+    </label>
+
+  </div>
 </div>
