@@ -6,14 +6,16 @@
         <tr>
           <th scope="col">Time</th>
           <th scope="col">Login</th>
-          <th scope="col">password</th>
+          <th scope="col">Password</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr scope="row" *ngFor="let loginPassword of PrevioslyGenerated">
-          <td style="width: 33%">{{loginPassword.Time.toLocaleString()}}</td>
-          <td style="width: 33%">{{loginPassword.Login}}</td>
-          <td style="width: 33%">{{loginPassword.Password}}</td>
+        <tr scope="row" *ngFor="let loginPassword of PrevioslyGenerated;index as i">
+          <td style="width: 30%">{{loginPassword.Time.toLocaleString()}}</td>
+          <td style="width: 30%">{{loginPassword.Login}}</td>
+          <td style="width: 30%">{{loginPassword.Password}}</td>
+          <td style="width: 10%"><button (click)="Delete(i)">Delete</button></td>
         </tr>
       </tbody>
     </table>

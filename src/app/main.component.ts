@@ -89,6 +89,11 @@ export class MainComponent {
     this.SavePreviousValuesToLocalStorage();
   }
 
+  Delete(index: number) {
+    this.PrevioslyGenerated.splice(index, 1);
+    this.SavePreviousValuesToLocalStorage();
+  }
+
   SavePreviousValuesToLocalStorage() {
     window.localStorage.setItem(this.PrevKey, JSON.stringify(this.PrevioslyGenerated));
   }
