@@ -86,6 +86,7 @@ export class MainComponent {
     }
     this.PrevioslyGenerated.push(this.Current);
     this.Current = new LoginPassword();
+    window.localStorage.removeItem(this.CurrentKey);
     this.SavePreviousValuesToLocalStorage();
   }
 
