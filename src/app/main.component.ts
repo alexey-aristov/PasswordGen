@@ -9,6 +9,9 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
+  readonly PrevKey: string = "PrevValues";
+  readonly CurrentKey: string = "CurrentValue";
+
   PrevioslyGenerated: LoginPassword[];
 
   Current: LoginPassword;
@@ -23,7 +26,18 @@ export class MainComponent {
     new RuleWrap(new SpecialCaseCharsRule(), "Special characters", true)];
 
   constructor() {
-    this.PrevioslyGenerated = [];
+    let prevValues = window.localStorage.getItem(this.PrevKey)
+    if (prevValues) {
+      this.PrevioslyGenerated = JSON.parse(prevValues);
+    } else {
+      this.PrevioslyGenerated = [];
+    }
+    let currValue = window.localStorage.getItem(this.CurrentKey);
+    if (currValue) {
+      this.PrevioslyGenerated.push(JSON.parse(currValue));
+      this.SavePreviousValuesToLocalStorage();
+      window.localStorage.removeItem(this.CurrentKey);
+    }
     this.Current = new LoginPassword();
   }
 
@@ -35,6 +49,8 @@ export class MainComponent {
         .map((ruleview) => ruleview.Rule),
       this.CharsCount);
     this.Current.Time = new Date();
+
+    window.localStorage.setItem(this.CurrentKey, JSON.stringify(this.Current));
   }
 
   GenerateWithRules(rules: CharsRule[], length: number) {
@@ -70,6 +86,11 @@ export class MainComponent {
     }
     this.PrevioslyGenerated.push(this.Current);
     this.Current = new LoginPassword();
+    this.SavePreviousValuesToLocalStorage();
+  }
+
+  SavePreviousValuesToLocalStorage() {
+    window.localStorage.setItem(this.PrevKey, JSON.stringify(this.PrevioslyGenerated));
   }
 
   OnCopied() {
