@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainComponent } from './main.component';
 import { FormsModule } from '@angular/forms';
 
+import { ClipboardModule } from 'ngx-clipboard';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [MainComponent]

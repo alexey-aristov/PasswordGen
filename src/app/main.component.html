@@ -22,7 +22,8 @@
     <input type="text" [(ngModel)]="Current.Login" />
     <button (click)="Generate()">Gen</button>
     <input type="text" readonly [(ngModel)]="Current.Password" />
-    <button>Copy</button>
+    <button ngxClipboard [cbContent]="Current.Password" #copyPopover="ngbPopover" (cbOnSuccess)="OnCopied()" ngbPopover="Copied."
+      triggers="manual">Copy</button>
     <button (click)="SwitchToNew()">New</button>
   </div>
   <div>

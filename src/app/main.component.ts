@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Component, ViewChild } from '@angular/core';
+import { NgbModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormsModule } from '@angular/forms';
 
@@ -14,6 +14,7 @@ export class MainComponent {
   Current: LoginPassword;
 
   CharsCount: number = 6;
+  @ViewChild('copyPopover') public copyPopover: NgbPopover;
 
   AvailableRules: RuleWrap[] = [
     new RuleWrap(new LowerCaseCharsRule(), "Lower case", true),
@@ -69,6 +70,11 @@ export class MainComponent {
     }
     this.PrevioslyGenerated.push(this.Current);
     this.Current = new LoginPassword();
+  }
+
+  OnCopied() {
+    this.copyPopover.open();
+    setTimeout(() => this.copyPopover.close(), 5000)
   }
 }
 
