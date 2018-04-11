@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <tr scope="row" *ngFor="let loginPassword of PrevioslyGenerated;index as i">
-          <td style="width: 30%">{{loginPassword.Time.toLocaleString()}}</td>
+          <td style="width: 30%">{{FormatDate(loginPassword.Time)}}</td>
           <td style="width: 30%">{{loginPassword.Login}}</td>
           <td style="width: 30%">{{loginPassword.Password}}</td>
           <td style="width: 10%"><button (click)="Delete(i)">Delete</button></td>

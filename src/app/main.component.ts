@@ -3,6 +3,8 @@ import { NgbModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormsModule } from '@angular/forms';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-root',
   templateUrl: './main.component.html',
@@ -26,7 +28,7 @@ export class MainComponent {
     new RuleWrap(new SpecialCaseCharsRule(), "Special characters", true)];
 
   constructor() {
-    let prevValues = window.localStorage.getItem(this.PrevKey)
+    let prevValues = window.localStorage.getItem(this.PrevKey);
     if (prevValues) {
       this.PrevioslyGenerated = JSON.parse(prevValues);
     } else {
@@ -103,6 +105,10 @@ export class MainComponent {
     this.copyPopover.open();
     setTimeout(() => this.copyPopover.close(), 5000)
   }
+
+  FormatDate(date: Date) {
+    return moment(date).format('MMMM Do YYYY, H:mm:ss');
+  }
 }
 
 class RuleWrap {
@@ -120,7 +126,7 @@ class RuleWrap {
 class LoginPassword {
   Login: string;
   Password: string;
-  Time: Date
+  Time: Date;
 }
 
 interface CharsRule {
